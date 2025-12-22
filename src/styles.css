@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
-
+@import "primeicons/primeicons.css";
 /* input */
 .p-password input {
     width: inherit;
@@ -8,4 +8,4 @@
 
 .p-autocomplete input {
     width: inherit;
-}
+}       

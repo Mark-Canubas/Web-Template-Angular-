@@ -31,7 +31,7 @@ export class Login implements OnInit {
   onSubmit() {
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);
-      this.navigateTo('layout');
+      this.navigateTo('home');
     } else {
       this.loginForm.markAllAsTouched();
     }
