@@ -1,30 +1,34 @@
-<div class="flex h-screen max-w-7xl mx-auto bg-gray-100">
-  <!-- Sidebar -->
-  <div class="flex flex-col w-65 bg-white border-r border-gray-300">
-    <!-- Logo/Brand -->
-    <div class="flex justify-center items-center gap-2 py-4"> 
-      <i class="pi pi-code"></i>
-      <h1 class="text-xl text-gray-600 font-semibold">My App</h1>
+<div
+  class="sticky top-0 flex justify-between items-center px-6 py-5 bg-white/95 backdrop-blur-xl border-b border-gray-200 shadow-sm z-50"
+>
+  <div class="flex items-center gap-2 max-w-7xl w-full mx-auto">
+    <div class="flex items-center gap-3 w-60 pl-15">
+      <i class="pi pi-code text-gray-700" style="font-size: 26px"></i>
+      <h1 class="text-xl text-gray-800 font-bold tracking-tight">My App</h1>
     </div>
+  </div>
+</div>
 
-    <!-- Navigation -->
+<div class="flex h-[calc(100vh-88px)] max-w-7xl mx-auto bg-gray-50">
+  <div class="flex flex-col w-60 bg-white border-r border-gray-200 overflow-y-auto">
     <p-panel-menu
       [model]="navItems"
       [pt]="{
-        root: 'border-0! gap-0!',
+        root: 'border-0! gap-1!',
         panel: 'border-0! p-0!',
-        submenuIcon: 'order-1 ml-auto text-black!',
-        headerLink: 'hover:bg-gray-200 text-black! rounded-lg!',
-        headerIcon: 'text-black!',
-        itemIcon: 'text-black!',
-        itemLink: 'hover:bg-gray-200 text-black! rounded-lg!'
+        submenuIcon: 'order-1 ml-auto text-gray-700!',
+        headerLink: 'text-gray-800! font-medium! rounded-lg! hover:bg-gray-100! transition-colors!',
+        headerIcon: 'text-gray-700!',
+        itemIcon: 'text-gray-500!',
+        itemLink: 'hover:bg-gray-100 text-gray-700! border-l-2 border-gray-300! hover:border-gray-500! transition-all! pl-4!'
       }"
-      [multiple]="true"
+      [multiple]="false"
     ></p-panel-menu>
   </div>
 
   <!-- Main Content Area -->
-  <div class="flex-1 overflow-y-auto p-4 bg-white">
+  <div class="flex-1 p-6 bg-white overflow-y-auto">
     <router-outlet></router-outlet>
   </div>
+  
 </div>
