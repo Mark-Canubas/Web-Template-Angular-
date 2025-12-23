@@ -1,34 +1,78 @@
-<div
-  class="sticky top-0 flex justify-between items-center px-6 py-5 bg-white/95 backdrop-blur-xl border-b border-gray-200 shadow-sm z-50"
->
-  <div class="flex items-center gap-2 max-w-7xl w-full mx-auto">
-    <div class="flex items-center gap-3 w-60 pl-15">
-      <i class="pi pi-code text-gray-700" style="font-size: 26px"></i>
-      <h1 class="text-xl text-gray-800 font-bold tracking-tight">My App</h1>
+<div class="w-screen h-dvh overflow-hidden flex bg-gray-50">
+  <!-- Sidebar -->
+  <div
+    class="fixed md:relative z-40 h-dvh left-0 transition-all duration-500 ease-in-out overflow-hidden"
+    [ngClass]="{
+      'translate-x-0 w-full md:w-72': sidebarOpen,
+      '-translate-x-full md:translate-x-0 md:w-0': !sidebarOpen
+    }"
+  >
+    <div class="h-full w-72 flex flex-col bg-white border-r border-gray-200">
+      <!-- Image Container -->
+      <div class="w-full h-50 p-5 shrink-0">
+        <img
+          src="https://images.unsplash.com/photo-1632119753701-1d5086c56175?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="User Profile Picture"
+          class="w-full h-full object-cover rounded-md"
+        />
+      </div>
+
+      <!-- Menu Container -->
+      <div class="flex-1 overflow-y-auto p-5 pt-0">
+        <p-panel-menu
+          [model]="menuItems"
+          [pt]="{
+            root: 'border-0! gap-3!',
+            panel: 'border-0! p-0!',
+            submenuIcon:
+              'order-1 ml-auto text-gray-500 transition-transform!',
+            headerLink:
+              'border! border-gray-300! text-gray-800! rounded-lg! hover:bg-gray-50! font-medium! text-sm!',
+            headerIcon: 'text-gray-700! text-sm!',
+            itemIcon: 'text-gray-500! mr-2! text-sm!',
+            itemLink:
+              'hover:bg-gray-100! text-gray-700! border-l! border-gray-300! hover:border-gray-400! text-sm!',
+          }"
+          [multiple]="false"
+        />
+      </div>
+
+      <div class="border-t border-gray-300 flex">
+        <button
+          type="button"
+          class="w-full flex items-center justify-center gap-1 px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors text-left"
+        >
+          <i class="pi pi-cog text-gray-600 shrink-0"></i>
+          <span class="text-gray-800 truncate">Profile</span>
+        </button>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="flex h-[calc(100vh-88px)] max-w-7xl mx-auto bg-gray-50">
-  <div class="flex flex-col w-60 bg-white border-r border-gray-200 overflow-y-auto">
-    <p-panel-menu
-      [model]="navItems"
-      [pt]="{
-        root: 'border-0! gap-1!',
-        panel: 'border-0! p-0!',
-        submenuIcon: 'order-1 ml-auto text-gray-700!',
-        headerLink: 'text-gray-800! font-medium! rounded-lg! hover:bg-gray-100! transition-colors!',
-        headerIcon: 'text-gray-700!',
-        itemIcon: 'text-gray-500!',
-        itemLink: 'hover:bg-gray-100 text-gray-700! border-l-2 border-gray-300! hover:border-gray-500! transition-all! pl-4!'
-      }"
-      [multiple]="false"
-    ></p-panel-menu>
-  </div>
+  <div class="flex flex-col flex-1 overflow-hidden">
+    <!-- Header -->
+    <div
+      class="h-16 md:h-20 bg-white border-b border-gray-200 flex justify-between items-center px-3"
+    >
+      <div class="flex items-center justify-center gap-2">
+        <button
+          (mouseenter)="showSidebar()"
+          (click)="toggleSidebar()"
+          class="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+        >
+          <i class="pi pi-bars text-gray-800 text-xl"></i>
+        </button>
+        <h1 class="text-lg md:text-xl font-semibold text-gray-800">
+          Dashboard
+        </h1>
+      </div>
+    </div>
 
-  <!-- Main Content Area -->
-  <div class="flex-1 p-6 bg-white overflow-y-auto">
-    <router-outlet></router-outlet>
+    <!-- Main Content -->
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50">
+      <div class="p-4 md:p-6 min-h-full">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
   </div>
-  
 </div>

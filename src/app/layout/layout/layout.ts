@@ -1,142 +1,85 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+import { MenuItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { RouterModule } from '@angular/router';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import { RouterOutlet } from '@angular/router';
-
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-layout',
-  imports: [PanelMenuModule, RouterOutlet],
+  imports: [CommonModule, ButtonModule, RouterModule, PanelMenuModule],
   templateUrl: './layout.html',
 })
 export class Layout {
-  navItems = [
+  sidebarOpen = false;
+  buttonHovered = false;
+
+  menuItems: MenuItem[] = [
     {
-      label: 'Dashboard',
-      icon: 'pi pi-fw pi-home',
+      label: 'Home',
+      icon: 'pi pi-home',
+      routerLink: ['/home']
     },
     {
-      label: 'Analytics',
-      icon: 'pi pi-fw pi-chart-line',
-      items: [
-        {
-          label: 'Reports',
-          icon: 'pi pi-fw pi-file',
-        },
-        {
-          label: 'Statistics',
-          icon: 'pi pi-fw pi-chart-bar',
-        },
-        {
-          label: 'Insights',
-          icon: 'pi pi-fw pi-eye',
-        },
-      ],
-    },
-    {
-      label: 'Projects',
-      icon: 'pi pi-fw pi-briefcase',
-      items: [
-        {
-          label: 'Active',
-          icon: 'pi pi-fw pi-check-circle',
-        },
-        {
-          label: 'Archived',
-          icon: 'pi pi-fw pi-inbox',
-        },
-        {
-          label: 'Templates',
-          icon: 'pi pi-fw pi-clone',
-        },
-      ],
-    },
-    {
-      label: 'Team',
-      icon: 'pi pi-fw pi-users',
-      items: [
-        {
-          label: 'Members',
-          icon: 'pi pi-fw pi-user',
-        },
-        {
-          label: 'Roles',
-          icon: 'pi pi-fw pi-shield',
-        },
-        {
-          label: 'Invitations',
-          icon: 'pi pi-fw pi-envelope',
-        },
-      ],
-    },
-    {
-      label: 'Messages',
-      icon: 'pi pi-fw pi-comments',
-      badge: '5',
-    },
-    {
-      label: 'Calendar',
-      icon: 'pi pi-fw pi-calendar',
-    },
-    {
-      label: 'Documents',
-      icon: 'pi pi-fw pi-folder',
-      items: [
-        {
-          label: 'My Files',
-          icon: 'pi pi-fw pi-file',
-        },
-        {
-          label: 'Shared',
-          icon: 'pi pi-fw pi-share-alt',
-        },
-        {
-          label: 'Recent',
-          icon: 'pi pi-fw pi-clock',
-        },
-        {
-          label: 'Trash',
-          icon: 'pi pi-fw pi-trash',
-        },
-      ],
+      label: 'Profile',
+      icon: 'pi pi-user',
+      routerLink: ['/profile']
     },
     {
       label: 'Settings',
-      icon: 'pi pi-fw pi-cog',
+      icon: 'pi pi-cog',
       items: [
         {
-          label: 'Profile',
-          icon: 'pi pi-fw pi-user-edit',
-        },
-        {
-          label: 'Preferences',
-          icon: 'pi pi-fw pi-sliders-h',
+          label: 'Account',
+          icon: 'pi pi-user-edit',
+          routerLink: ['/settings/account']
         },
         {
           label: 'Security',
-          icon: 'pi pi-fw pi-lock',
+          icon: 'pi pi-shield',
+          routerLink: ['/settings/security']
         },
         {
-          label: 'Notifications',
-          icon: 'pi pi-fw pi-bell',
-        },
-      ],
+          label: 'Preferences',
+          icon: 'pi pi-sliders-h',
+          routerLink: ['/settings/preferences']
+        }
+      ]
     },
     {
-      label: 'Help & Support',
-      icon: 'pi pi-fw pi-question-circle',
+      label: 'Reports',
+      icon: 'pi pi-chart-bar',
       items: [
         {
-          label: 'Documentation',
-          icon: 'pi pi-fw pi-book',
+          label: 'Sales',
+          icon: 'pi pi-chart-line',
+          routerLink: ['/reports/sales']
         },
         {
-          label: 'Contact Support',
-          icon: 'pi pi-fw pi-phone',
-        },
-        {
-          label: 'FAQ',
-          icon: 'pi pi-fw pi-info-circle',
-        },
-      ],
-    },
+          label: 'Analytics',
+          icon: 'pi pi-chart-pie',
+          routerLink: ['/reports/analytics']
+        }
+      ]
+    }
   ];
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  showSidebar() {
+    this.sidebarOpen = true;
+  }
+
+  hideSidebar() {
+    this.sidebarOpen = false;
+  }
+  
+  onButtonHover(isHovered: boolean) {
+    this.buttonHovered = isHovered;
+    if(isHovered){
+      this.showSidebar();
+    }
+  }
+
 }

@@ -9,3 +9,7 @@
 .p-autocomplete input {
     width: inherit;
 }       
+
+.p-panelmenu {
+  --p-transition-duration: 1000ms;
+}
