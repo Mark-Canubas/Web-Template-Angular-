@@ -6,9 +6,9 @@ export class FormValidators {
       if (!control.value) {
         return { required: true };
       }
-      if (control.value.length < 6) {
+      if (control.value.length < 2) {
         return {
-          minLength: { requiredLength: 6, actualLength: control.value.length },
+          minLength: { requiredLength: 2, actualLength: control.value.length },
         };
       }
       return null;
@@ -20,9 +20,9 @@ export class FormValidators {
       if (!control.value) {
         return { required: true };
       }
-      if (control.value.length < 6) {
+      if (control.value.length < 2) {
         return {
-          minLength: { requiredLength: 6, actualLength: control.value.length },
+          minLength: { requiredLength: 2, actualLength: control.value.length },
         };
       }
       return null;

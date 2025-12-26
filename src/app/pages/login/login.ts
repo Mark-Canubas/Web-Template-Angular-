@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -7,37 +7,78 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormValidators } from '../../lib/prime-preset/validators/form-validators';
 import { Router } from '@angular/router';
-
+import { AuthService } from '../../core/services/auth/auth.service';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
-  imports: [ButtonModule, FloatLabelModule, InputTextModule, PasswordModule, CheckboxModule, ReactiveFormsModule],
+  imports: [
+    ButtonModule,
+    FloatLabelModule,
+    InputTextModule,
+    PasswordModule,
+    CheckboxModule,
+    ReactiveFormsModule,
+    ToastModule,
+  ],
   templateUrl: './login.html',
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('500ms ease-in', style({ opacity: 1 }))
+      ])
+    ])
+  ]
 })
-export class Login implements OnInit {
-  loginForm!: FormGroup;
-
-  fb = inject(FormBuilder)
+export class Login {
+  fb = inject(FormBuilder);
   router = inject(Router);
+  loginLoading = signal(false);
+  authService = inject(AuthService)
+  messageService = inject(MessageService);  
 
-  ngOnInit() {
-    this.loginForm = this.fb.group({
-      username: ['', FormValidators.username()],
-      password: ['', FormValidators.password()],
-      rememberMe: [false]
-    });
-  }
+  readonly form = this.fb.group({
+    username: ['', FormValidators.username()],
+    password: ['', FormValidators.password()],
+    rememberMe: [false],
+  });
 
-  onSubmit() {
-    if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
-      this.navigateTo('home');
-    } else {
-      this.loginForm.markAllAsTouched();
+  async submit(): Promise<void> {
+    if (this.form.invalid || this.loginLoading()) return;
+
+    this.loginLoading.set(true);
+    const { username, password, rememberMe } = this.form.getRawValue();
+
+    try{
+      const LoginResponse = await this.authService.login({ 
+        username: username ?? '', 
+        password: password ?? '' 
+      });
+
+      if (!LoginResponse.isSuccess) {
+        throw new Error('Invalid username or password.');
+      }
+
+      this.router.navigate(['/home'], { state: { loginSuccess: true } });
+
+      if(LoginResponse.isSuccess) await this.authService.getUserProfile();
+
+
+    } catch (err) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Login Failed',
+        detail: err instanceof Error ? err.message : String(err),
+        life: 3000
+      });
+    } finally {
+      this.loginLoading.set(false);
     }
   }
-
-  navigateTo(path:string){
+  navigateTo(path: string) {
     this.router.navigate([path]);
   }
 }
