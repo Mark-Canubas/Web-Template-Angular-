@@ -11,6 +11,7 @@ import { AuthService } from '../../core/services/auth/auth.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { User } from '../../core/model/user.model';
 
 @Component({
   selector: 'app-login',

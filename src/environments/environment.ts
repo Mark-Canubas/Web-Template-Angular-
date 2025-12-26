@@ -3,10 +3,6 @@ export const environment = {
   mock: false,
   version: '0.0.1-dev',
   
-  recaptcha: {
-    siteKey: '6LcePPUrAAAAAOcIdRBNl02RpNZ4RE2sqiPhRGA5'
-  },
-
   applicationId: '190',
   accessToken: 'CQtf6qedSISYXfmdDIT2',
   messageFormat: '01',
