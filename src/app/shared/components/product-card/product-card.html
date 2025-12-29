@@ -1,0 +1,62 @@
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+  @for (product of products(); track product.id) {
+  <p-card styleClass="h-full">
+    <!-- Header -->
+    <ng-template #header>
+      <div class="relative">
+        <img
+          [src]="product.image"
+          [alt]="product.name"
+          class="w-full h-48 object-cover"
+        />
+        <div class="absolute top-2 right-2">
+          <p-tag
+            [value]="product.inventoryStatus"
+            [severity]="getSeverity(product.inventoryStatus)"
+          ></p-tag>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- Body -->
+    <div class="flex flex-col gap-2">
+      <div class="flex justify-between items-start">
+        <h4 class="text-base font-semibold text-gray-800 truncate">
+          {{ product.name }}
+        </h4>
+        <span class="text-sm text-gray-500">
+          {{ product.category }}
+        </span>
+      </div>
+
+      <p class="text-sm text-gray-600">
+        {{ product.description }}
+      </p>
+
+      <div class="flex items-center">
+        <p-rating
+          [ngModel]="product.rating"
+          [readonly]="true"
+          styleClass="text-sm"
+        ></p-rating>
+        <span class="text-sm text-gray-600 ml-2"> ({{ product.rating }}) </span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <ng-template #footer>
+      <div class="flex justify-between items-center">
+        <span class="text-xl font-bold text-gray-600">
+          ${{ product.price }}
+        </span>
+        <p-button
+          icon="pi pi-shopping-cart"
+          label="Add"
+          [disabled]="product.inventoryStatus === 'Out of Stock'"
+          styleClass="p-button-sm"
+        ></p-button>
+      </div>
+    </ng-template>
+  </p-card>
+  }
+</div>
